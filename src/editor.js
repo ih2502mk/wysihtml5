@@ -66,6 +66,9 @@
       this.textarea         = new wysihtml5.views.Textarea(this, this.textareaElement, this.config);
       this.currentView      = this.textarea;
       this._isCompatible    = wysihtml5.browser.supported();
+
+      //experiments
+      this.model = new wysihtml5.models.Model("body");
       
       // Sort out unsupported/unwanted browsers here
       if (!this._isCompatible || (!this.config.supportTouchDevices && wysihtml5.browser.isTouchDevice())) {
@@ -86,6 +89,10 @@
       
       this.observe("beforeload", function() {
         this.synchronizer = new wysihtml5.views.Synchronizer(this, this.textarea, this.composer);
+
+        //experiments
+        this.modelSynchronizer = new wysihtml5.models.ModelSynchronizer(this, this.model, this.composer);
+
         if (this.config.toolbar) {
           this.toolbar = new wysihtml5.toolbar.Toolbar(this, this.config.toolbar);
         }

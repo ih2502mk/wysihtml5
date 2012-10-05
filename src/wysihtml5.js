@@ -19,6 +19,7 @@ var wysihtml5 = {
   lang:       {},
   selection:  {},
   views:      {},
+  models:     {}, 
   
   INVISIBLE_SPACE: "\uFEFF",
   
