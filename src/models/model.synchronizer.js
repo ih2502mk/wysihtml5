@@ -1,9 +1,7 @@
 /**
- * TODO: The fact model sits in folder called views is somewhat mileading... Needs to be refactored.
- */
-
-/**
- * Class that puts data from composer to corresponding "model". Based on synchronizer.js
+ * Class that puts data from composer to corresponding "model". Stolen from synchronizer.js
+ *
+ * TODO: observe form submision and reset
  * 
  */
 (function(wysihtml5) {
