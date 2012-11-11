@@ -3,9 +3,8 @@
  */
 wysihtml5.views.View = Base.extend(
   /** @scope wysihtml5.views.View.prototype */ {
-  constructor: function(parent, textareaElement, config) {
+  constructor: function(parent, config) {
     this.parent   = parent;
-    this.element  = textareaElement;
     this.config   = config;
     
     this._observeViewChange();

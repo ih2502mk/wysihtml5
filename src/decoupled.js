@@ -1,5 +1,5 @@
 (function(wysihtml5) {
-  var dom       = wysihtml5.dom,
+  var dom   = wysihtml5.dom,
   browser   = wysihtml5.browser;
 
   wysihtml5.views.Decoupled = wysihtml5.views.View.extend({
@@ -9,8 +9,7 @@
     CARET_HACK: "<br>",
 
     constructor: function(parent, config) {
-      this.base(parent, textareaElement, config);
-      this.textarea = this.parent.textarea;
+      this.base(parent, config);
       this._initSandbox();
     },
 
@@ -120,17 +119,8 @@
       });
       this.iframe  = this.sandbox.getIframe();
       
-      var textareaElement = this.textarea.element;
-      dom.insert(this.iframe).after(textareaElement);
-      
-      // Create hidden field which tells the server after submit, that the user used an wysiwyg editor
-      if (textareaElement.form) {
-        var hiddenField = document.createElement("input");
-        hiddenField.type   = "hidden";
-        hiddenField.name   = "_wysihtml5_mode";
-        hiddenField.value  = 1;
-        dom.insert(hiddenField).after(textareaElement);
-      }
+      var bodyElement = document.body;
+      dom.insert(this.iframe).into(bodyElement);
     },
 
     _create: function() {
@@ -138,8 +128,6 @@
       
       this.doc                = this.sandbox.getDocument();
       this.element            = this.doc.body;
-      this.textarea           = this.parent.textarea;
-      this.element.innerHTML  = this.textarea.getValue(true);
       this.enable();
       
       // Make sure our selection handler is ready
@@ -147,34 +135,19 @@
       
       // Make sure commands dispatcher is ready
       this.commands  = new wysihtml5.Commands(this.parent);
-
-      dom.copyAttributes([
-        "className", "spellcheck", "title", "lang", "dir", "accessKey"
-      ]).from(this.textarea.element).to(this.element);
       
       dom.addClass(this.element, this.config.composerClassName);
-
-      // Make the editor look like the original textarea, by syncing styles
-      if (this.config.style) {
-        this.style();
-      }
-
-      this.observe();
 
       var name = this.config.name;
       if (name) {
         dom.addClass(this.element, name);
         dom.addClass(this.iframe, name);
       }
-      
-      if (this.textarea.element.disabled) {
-        this.disable();
-      }
-      
+            
       // Simulate html5 placeholder attribute on contentEditable element
       var placeholderText = typeof(this.config.placeholder) === "string"
         ? this.config.placeholder
-        : this.textarea.element.getAttribute("placeholder");
+        : "";
       if (placeholderText) {
         dom.simulatePlaceholder(this.parent, this, placeholderText);
       }

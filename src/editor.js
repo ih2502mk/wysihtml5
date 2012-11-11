@@ -60,11 +60,8 @@
   
   wysihtml5.Editor = wysihtml5.lang.Dispatcher.extend(
     /** @scope wysihtml5.Editor.prototype */ {
-    constructor: function(textareaElement, config) {
-      this.textareaElement  = typeof(textareaElement) === "string" ? document.getElementById(textareaElement) : textareaElement;
+    constructor: function(config) {
       this.config           = wysihtml5.lang.object({}).merge(defaultConfig).merge(config).get();
-      this.textarea         = new wysihtml5.views.Textarea(this, this.textareaElement, this.config);
-      this.currentView      = this.textarea;
       this._isCompatible    = wysihtml5.browser.supported();
 
       //experiments
@@ -80,7 +77,7 @@
       // Add class name to body, to indicate that the editor is supported
       wysihtml5.dom.addClass(document.body, this.config.bodyClassName);
       
-      this.composer = new wysihtml5.views.Composer(this, this.textareaElement, this.config);
+      this.composer = new wysihtml5.views.Decoupled(this, this.config);
       this.currentView = this.composer;
       
       if (typeof(this.config.parser) === "function") {
@@ -88,8 +85,6 @@
       }
       
       this.observe("beforeload", function() {
-        this.synchronizer = new wysihtml5.views.Synchronizer(this, this.textarea, this.composer);
-
         //experiments
         this.modelSynchronizer = new wysihtml5.models.ModelSynchronizer(this, this.model, this.composer);
 

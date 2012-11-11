@@ -11,6 +11,7 @@
 
     constructor: function(parent, textareaElement, config) {
       this.base(parent, textareaElement, config);
+      console.log(this.parent);
       this.textarea = this.parent.textarea;
       this._initSandbox();
     },
