@@ -161,9 +161,9 @@
 
       // Simulate html5 autofocus on contentEditable element
       // This doesn't work on IOS (5.1.1)
-      if ((this.textarea.element.hasAttribute("autofocus") || document.querySelector(":focus") == this.textarea.element) && !browser.isIos()) {
+      //if ((this.textarea.element.hasAttribute("autofocus") || document.querySelector(":focus") == this.textarea.element) && !browser.isIos()) {
         setTimeout(function() { that.focus(true); }, 100);
-      }
+      //}
 
       wysihtml5.quirks.insertLineBreakOnReturn(this);
 
@@ -182,7 +182,7 @@
       }
 
       // Okay hide the textarea, we are ready to go
-      this.textarea.hide();
+      //this.textarea.hide();
 
       // Fire global (before-)load event
       this.parent.fire("beforeload").fire("load");
