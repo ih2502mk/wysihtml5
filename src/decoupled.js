@@ -97,7 +97,7 @@
     },
 
     hasPlaceholderSet: function() {
-      return this.getTextContent() == this.textarea.element.getAttribute("placeholder") && this.placeholderSet;
+      return 0;
     },
 
     isEmpty: function() {
@@ -118,6 +118,13 @@
         stylesheets:  this.config.stylesheets
       });
       this.iframe  = this.sandbox.getIframe();
+
+      dom.setStyles({
+        "width" : "100%",
+        "height" : "300px",
+        "border" : "2px solid #666"
+      })
+        .on(this.iframe);
       
       var bodyElement = document.body;
       dom.insert(this.iframe).into(bodyElement);
@@ -285,7 +292,7 @@
             // After resizing IE sometimes forgets to remove the old resize handles
             wysihtml5.quirks.redraw(element);
           };
-      
+
       this.commands.exec("enableObjectResizing", true);
       
       // IE sets inline styles after resizing objects
